@@ -7,14 +7,16 @@ app.use(cors());
 app.use(express.json());
 
 const mailer = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  ignoreTLS: false,
-  secure: false,
+  host: process.env.HOST,
+  port: process.env.SMTP_PORT,
   auth: {
-    user: process.env.GMAIL,
-    pass: process.env.GMAIL_PASS,
+    user: process.env.USER,
+    pass: process.env.PASS,
   },
+});
+
+app.get("/", (req, res) => {
+  res.send({ "/send-email": "POST - to send email" });
 });
 
 app.post("/send-email", async (req, res) => {
