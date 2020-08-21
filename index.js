@@ -2,10 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
 
-const PORT = process.env.PORT || 1000;
-const GMAIL = "dvking781@gmail.com";
-const GMAIL_PASS = "abc.12345678";
-
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -13,8 +9,8 @@ app.use(express.json());
 const mailer = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: GMAIL,
-    pass: GMAIL_PASS,
+    user: process.env.GMAIL,
+    pass: process.env.GMAIL_PASS,
   },
 });
 
@@ -31,4 +27,7 @@ app.post("/send-email", async (req, res) => {
   }
 });
 
-app.listen(PORT, console.log(`Server started port ${PORT}`));
+app.listen(
+  process.env.PORT,
+  console.log(`Server started port ${process.env.PORT}`)
+);
